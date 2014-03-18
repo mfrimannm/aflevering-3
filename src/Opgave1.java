@@ -1,59 +1,55 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+// denne kunne hvis den skulle være bedre have en liste over alle primtal
+
 import java.util.Scanner;
 
 public class Opgave1 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		Scanner scanConsole = new Scanner(System.in);
-		int[] primeFactors = PrimeFactors();
-		System.out.println(primeFactors.toString());
-		scanConsole.close();
+		Scanner scan = new Scanner(System.in);
+		long num = 1;
+		while (num > 0) {
+			System.out.print("Enter integer greater than 1 (0 to terminate): ");
+			num = getNumber(scan);
+			if (num == 0) {
+				System.out.println("Program afsluttet");
+				break;
+			}
+			String primeFactors = PrimeFactors(num);
+			System.out.println("List of prime factors: " + primeFactors);
+		}
+		scan.close();
 	}
 
-	private static int[] PrimeFactors() {
-		// TODO Auto-generated method stub
-		return null;
+	private static String PrimeFactors(long num) {
+		String primeFactors = "";
+
+		if (num == 1) {
+			primeFactors = "1";
+			System.out.println(1);
+			return primeFactors;
+		}
+		long i = 2;
+		while (num != 1) {
+			if ((num % i) == 0) {
+				primeFactors += i;
+				num = num / i;
+				if (num != 1) {
+					primeFactors += ", ";
+				}
+			} else {
+				i++;
+			}
+		}
+		return primeFactors;
 	}
 
-	private static int getNumber(Scanner scan) {
-		int num = -1;
-		while (!scan.hasNextInt()) {
+	private static long getNumber(Scanner scan) {
+		long num = -1;
+		while (!scan.hasNextLong()) {
 			scan.nextLine();
 			System.out.println("Du skal intaste et heltal");
 		}
-		num = scan.nextInt();
-
+		num = scan.nextLong();
 		return num;
 	}
-
-
-	private static void createAndUpdateListWithData() {
-		
-		modtag liste
-		
-		lav ny liste med ny data
-		
-		retuner den ny liste
-		
-	}
-
-	private static int[] listOfPrimes() throws FileNotFoundException{
-		File primz = new File("primz");
-		Scanner scanFile = new Scanner(primz);
-		while(scanFile.hasNext()){
-			
-		}
-		int[] listOfPrimes = new int[1];
-		scanFile.close();
-		return listOfPrimes;
-	}
-
-
-
-
-
-
 }
