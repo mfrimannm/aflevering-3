@@ -1,18 +1,30 @@
+import java.util.Scanner;
+
 public class Test {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		StdDraw.setXscale(-1, 1);
-		StdDraw.setYscale(-1, 1);
-		StdDraw.setPenColor(StdDraw.RED);
-		StdDraw.filledSquare(0, 0, 1);
-		StdDraw.setPenColor(StdDraw.BLACK);
-		StdDraw.line(0, 0, 1, 0);
-		StdDraw.setPenRadius(1.0 / 200);
-		int n = 10;
-		for (int i = 0; i < n * 2 * Math.PI; i++) {
-			StdDraw.point(Math.cos(i / (double) n), Math.sin(i / (double) n));
-		}
+		Scanner scan = new Scanner(System.in);
+		int num = 0;
+		num = getNumberBetwen(scan, 0, 9);
+		System.out.println(num);
 	}
+	
+		private static int getNumberBetwen(Scanner scan, int controlLow,
+				int controlHigh) {
+			int num = 5;
+			System.out.println(controlHigh);
+			while (num < controlHigh && num > controlLow) {
+//				while (!scan.hasNextInt()) {
+//					scan.nextLine();
+//					System.out.println("Du skal intaste et heltal mellem 1 og 9");
+//				}
+				if (!scan.hasNextInt()) {
+					scan.nextLine();
+					System.out.println("Du skal intaste et heltal mellem 1 og 9");
+				}
+			}num = scan.nextInt();
+
+			return num;
+		}
 
 }
