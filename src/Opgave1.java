@@ -39,7 +39,6 @@ public class Opgave1 {
 		long i = 2;
 
 		long limitToWhenYouKnowItIsAPrime = (long) Math.sqrt(num);
-		// dette er ikke godt da math.sqrt ikke tager long og derfor laver overflow
 
 		while (num != 1) {
 			if ((num % i) == 0) {
