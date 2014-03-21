@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Opgave3 {
@@ -34,7 +33,7 @@ public class Opgave3 {
 		StdDraw.setPenColor(StdDraw.RED);
 		StdDraw.setPenRadius(20.0 / 800);
 
-		int midt = (int) (((double)size / 2) + ((double)size / 4));
+		int midt = (int) (((double) size / 2) + ((double) size / 4));
 
 		StdDraw.point(0, midt);
 		return (int) (midt);
@@ -44,14 +43,13 @@ public class Opgave3 {
 			int[] yOldAndNew) {
 		// TODO Auto-generated method stub
 		int direction = 1;
-		// int controlLow = 0;
-		// int controlHigh = 9;
+		// dette er da der bruges et numpad
+		int controlLow = 0;
+		int controlHigh = 9;
 
 		while (direction >= 0) {
-			System.out
-					.print("Enter integer greater than 0 to choose direction (0 to terminate): ");
-			// direction = getNumberBetwen(scan, controlLow, controlHigh);
-			direction = getNumber(scan);
+			System.out.print("Enter integer from 0-9 to choose direction (0 to terminate): ");
+			direction = getNumberBetwen(scan, controlLow, controlHigh);
 
 			System.out.println(direction + "her");
 			if (direction == 0) {
@@ -77,7 +75,6 @@ public class Opgave3 {
 																// koordinat
 
 		drawDrivenLine(xOldAndNewStop, yOldAndNew);
-		
 
 		xOldAndNewStop[0] = xOldAndNewStop[1];
 		yOldAndNew[0] = yOldAndNew[1];
@@ -161,26 +158,16 @@ public class Opgave3 {
 				yOldAndNew[1]);
 	}
 
-	private static boolean outOfTrack(int xOld, int yOld, int size) {
+	private static boolean outOfTrack(int x, int y, int size) {
 		// Tjekker om den er inde eller uden for banen
 		// hvis ude retunerer true
 		int min = -size;
 		int max = size;
-		System.out.println(min/2);
-		System.out.println(max/2);
-		System.out.println(xOld);
-		System.out.println(yOld);
 
 		// ydre ring
-		if ((xOld <= max && xOld >= min 
-				&& yOld <= max && yOld >= min)) {
+		if ((x < max && x > min && y < max && y > min)
+				&& !((x <= max / 2 && x >= min / 2 && y <= max / 2 && y >= min / 2))) {
 			return false;
-		}
-		// indre ring
-		if (((xOld >= (max/2)) && (xOld <= (min/2)) 
-				|| yOld >= (max/2)) && yOld <= (min/2)){
-			return false;
-
 		}
 		return true;
 	}
@@ -230,17 +217,25 @@ public class Opgave3 {
 		return num;
 	}
 
-	// private static int getNumberBetwen(Scanner scan, int controlLow,
-	// int controlHigh) {
-	// int num = 5;
-	// System.out.println(controlHigh);
-	// while (num < controlHigh && num > controlLow) {
-	// while (!scan.hasNextInt()) {
-	// scan.nextLine();
-	// System.out.println("Du skal intaste et heltal mellem 1 og 9");
-	// }
-	// num = scan.nextInt();
-	// }
-	// return num;
-	// }
+	public static int getNumberBetwen(Scanner scan, int controlLow,	int controlHigh) {
+
+		int num = 0;
+
+		System.out.println("Indtaste et heltal mellem " + controlLow + " og " + controlHigh);
+		while (true) {
+			while (!scan.hasNextInt()) {
+				scan.nextLine();
+				System.out.println("Du skal intaste et heltal mellem 1 og 9");
+			}
+			num = scan.nextInt();
+
+			if (num >= controlLow && num <= controlHigh) {
+				break;
+			} else {
+				System.out.println("Du skal intaste et heltal mellem 1 og 9");
+			}
+		}
+		return num;
+	}
+
 }
