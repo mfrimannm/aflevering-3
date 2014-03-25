@@ -1,7 +1,3 @@
-// denne kunne hvis den skulle være bedre have en liste over alle primtal
-
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Opgave1 {
@@ -11,7 +7,7 @@ public class Opgave1 {
 		long num = 1;
 		while (num > 0) {
 			System.out.print("Enter integer greater than 1 (0 to terminate): ");
-			num = getNumber(scan);
+			num = getNumberPositive(scan);
 			if (num == 0) {
 				System.out.println("Program afsluttet");
 				break;
@@ -20,10 +16,9 @@ public class Opgave1 {
 			String primeFactors = PrimeFactors(num);
 			long timeafter = System.currentTimeMillis();
 			long timeTaken = timeafter - timebefore;
-			double seconds = timeTaken / 1000.00000000000;
-			System.out.println("List of prime factors: " + primeFactors);
-			System.out.println("It took " + seconds
-					+ " sec to do the caluation");
+			double seconds = timeTaken / 1000.0;
+			System.out.println(primeFactors);
+			System.out.println("It took " + seconds	+ " sec to do the calculation");
 		}
 		scan.close();
 	}
@@ -32,14 +27,10 @@ public class Opgave1 {
 		String primeFactors = "";
 
 		if (num == 1) {
-			primeFactors = "1";
-			System.out.println(1);
+			primeFactors = "1 har ingen primfaktorisering";
 			return primeFactors;
 		}
 		long i = 2;
-
-		long limitToWhenYouKnowItIsAPrime = (long) Math.sqrt(num);
-
 		while (num != 1) {
 			if ((num % i) == 0) {
 				primeFactors += i;
@@ -49,22 +40,30 @@ public class Opgave1 {
 				}
 			} else {
 				i++;
-				if (i == limitToWhenYouKnowItIsAPrime) {
+				if (i == ((long) Math.sqrt(num) + 1)) {
 					primeFactors += num;
 					break;
+				}
 			}
 		}
-		}
-		return primeFactors;
+		return "List of prime factors: " + primeFactors;
 	}
 
-	private static long getNumber(Scanner scan) {
-		long num = -1;
-		while (!scan.hasNextLong()) {
-			scan.nextLine();
-			System.out.println("Du skal intaste et heltal");
+	private static long getNumberPositive(Scanner scan) {
+		long num = 0;
+		while (true) {
+			while (!scan.hasNextLong()) {
+				scan.nextLine();
+				System.out.println("Du skal indtaste et positivt heltal mindre end 2^63");
+			}
+			num = scan.nextLong();
+			scan.nextLine(); // clear console
+			if (num >= 0) {
+				break;
+			} else {
+				System.out.println("Du skal indtaste et positivt heltal mindre end 2^63");
+			}
 		}
-		num = scan.nextLong();
 		return num;
 	}
 }

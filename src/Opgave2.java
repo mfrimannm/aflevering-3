@@ -3,13 +3,11 @@ import java.util.Scanner;
 public class Opgave2 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Scanner scan = new Scanner(System.in);
 		int size = 1;
-
 		while (size > 0) {
 			System.out.print("Enter size of grid (0 to terminate): ");
-			size = getNumber(scan);
+			size = getNumberPositive(scan);
 			if (size == 0) {
 				System.out.println("Program afsluttet");
 				break;
@@ -21,21 +19,24 @@ public class Opgave2 {
 	}
 
 	private static void randomWalk(int size) {
-		// TODO Auto-generated method stub
 		int min = -size;
 		int max = size;
 		StdDraw.setXscale(min, max);
 		StdDraw.setYscale(min, max);
-		StdDraw.setPenColor(StdDraw.BLACK);
-		StdDraw.setPenRadius(2.0 / 1000);
-		StdDraw.square(0, 0, max);
+		System.out.println("Size of grid from (" + min + "," + min + ") to (" + max + "," + max + ")");
+		drawGrid(min, max, size);
+		
+		// starter gang
+		StdDraw.setPenColor(StdDraw.BLUE);
+		StdDraw.setPenRadius(2.0 / 400.0);
 		int x = 0;
 		int y = 0;
-		System.out.println("Position = (" + x + "," + y + ")");
 		int count = 0;
-		while (x < max && x > min && y < max && y > min) {
+		System.out.println("Beginning random walk");
+		StdDraw.point(x, y);
+		System.out.println("Position at step " + count + " = (" + x + "," + y + ")");
+		while (x <= max && x >= min && y <= max && y >= min) {
 			int direction = (int) (Math.random() * 4);
-
 			if (direction == 0) {
 				x++;
 			} else if (direction == 1) {
@@ -45,23 +46,50 @@ public class Opgave2 {
 			} else if (direction == 3) {
 				y--;
 			}
-			System.out.println("Position = (" + x + "," + y + ")");
-
-			StdDraw.point(x, y);
-
 			count++;
+			System.out.println("Position at step " + count + " = (" + x + "," + y + ")");
+			StdDraw.point(x, y);
 		}
-		System.out.println(count);
+		System.out.println("Total number of steps = " + count);
 	}
 
-	private static int getNumber(Scanner scan) {
-		int num = -1;
-		while (!scan.hasNextInt()) {
-			scan.nextLine();
-			System.out.println("Du skal intaste et heltal");
+	private static void drawGrid(int min, int max, int size) {
+		// tegner omkres
+		StdDraw.setPenRadius(6.0 / 2000);
+		StdDraw.setPenColor(StdDraw.RED);
+		StdDraw.square(0, 0, max + 1);
+
+		// De to for loops tegner de små firkanter.
+		if (size < 100) {
+			StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
+			StdDraw.setPenRadius(2.0 / 2000);
+
+			for (int i = min; i <= max; i++) {
+				StdDraw.line(i, max, i, min);
+			}
+			for (int i = min; i <= max; i++) {
+				StdDraw.line(max, i, min, i);
+			}
 		}
-		num = scan.nextInt();
+	}
+
+	private static int getNumberPositive(Scanner scan) {
+		int num = 0;
+		while (true) {
+			while (!scan.hasNextInt()) {
+				scan.nextLine();
+				System.out.println("Du skal indtaste et positivt heltal (maks. 2^31-1)");
+			}
+			num = scan.nextInt();
+			scan.nextLine(); // Så den kun tager en værdi fra consolen af
+							 // gangen og ikke bare gemmen resten til næste
+							 // omgang
+			if (num >= 0) {
+				break;
+			} else {
+				System.out.println("Du skal indtaste et positivt heltal (maks. 2^31-1)");
+			}
+		}
 		return num;
 	}
-
 }
